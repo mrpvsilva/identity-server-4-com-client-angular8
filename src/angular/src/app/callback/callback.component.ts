@@ -12,33 +12,22 @@ export class CallbackComponent implements OnInit {
   isAuthenticated: boolean;
   userData: any;
 
-  constructor(public oidcSecurityService: OidcSecurityService,
-    private router: Router) {
-    if (this.oidcSecurityService.moduleSetup) {
-      this.doCallbackLogicIfRequired();
-    } else {
-      this.oidcSecurityService.onModuleSetup.subscribe(() => {
-        this.doCallbackLogicIfRequired();
-      });
-    }
+  constructor(
+    public oidcSecurityService: OidcSecurityService,
+    private router: Router
+  ) {
   }
-
-
 
   ngOnInit() {
     this.oidcSecurityService
-      .getIsAuthorized()
-      .subscribe(auth => {
-        if (auth) {
+      .checkAuth()
+      .subscribe(isAuthenticated => {
+        if (isAuthenticated) {
           this.router.navigate([''])
         } else {
           this.router.navigate(['login'])
         }
       });
-  }
-  private doCallbackLogicIfRequired() {
-    // Will do a callback, if the url has a code and state parameter.
-    this.oidcSecurityService.authorizedCallbackWithCode(window.location.toString());
   }
 
 }
