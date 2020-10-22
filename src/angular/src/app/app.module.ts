@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
+import { environment } from './../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,19 +21,7 @@ import {
 
 
 export function loadConfig(oidcConfigService: OidcConfigService) {
-  return () => oidcConfigService.withConfig({
-    'stsServer': 'https://localhost:44310',
-    'redirectUrl': 'http://localhost:4200/callback',
-    'postLogoutRedirectUri': 'http://localhost:4200/login',
-    'clientId': 'angular',
-    'responseType': 'code',
-    'scope': 'openid profile',
-    'startCheckSession': true,
-    'silentRenew': true,
-    'silentRenewUrl': 'http://localhost:4200/silent-renew.html',
-    'postLoginRoute': '/callback',
-    'maxIdTokenIatOffsetAllowedInSeconds': 10
-  });
+  return () => oidcConfigService.withConfig(environment.oidcConfig);
 }
 
 @NgModule({
