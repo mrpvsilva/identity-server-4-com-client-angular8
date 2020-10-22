@@ -12,8 +12,10 @@ export class CallbackComponent implements OnInit {
   isAuthenticated: boolean;
   userData: any;
 
-  constructor(public oidcSecurityService: OidcSecurityService,
-    private router: Router) {    
+  constructor(
+    public oidcSecurityService: OidcSecurityService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -26,6 +28,6 @@ export class CallbackComponent implements OnInit {
           this.router.navigate(['login'])
         }
       });
-  } 
+  }
 
 }
